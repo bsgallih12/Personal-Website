@@ -1,0 +1,78 @@
+---
+title: "Tidy Tuesday 2-13-24"
+author: "Brier S. Gallihugh"
+date: "2024-02-14"
+categories: [Valentines,R,TidyTuesday]
+draft: true
+image: valentines.png
+image-alt: "A photo with a heart shape"
+description: "A #TidyTuesday data visualization of Valentines Day spending data for 2010-2022"
+warning: false
+---
+
+```{r tidytuesday}
+#| output: false
+#| warning: false
+#| echo: false
+# historical_spending <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-02-13/historical_spending.csv')
+# 
+# historical_spending$inflation <- 103
+# 
+# historical_spending[2,"inflation"] <- 106.25
+# historical_spending[3,"inflation"] <- 108.45
+# historical_spending[4,"inflation"] <- 110.04
+# historical_spending[5,"inflation"] <- 111.82
+# historical_spending[6,"inflation"] <- 111.96
+# historical_spending[7,"inflation"] <- 113.37
+# historical_spending[8,"inflation"] <- 115.78
+# historical_spending[9,"inflation"] <- 118.61
+# historical_spending[10,"inflation"] <- 120.76
+# historical_spending[11,"inflation"] <- 122.25
+# historical_spending[12,"inflation"] <- 127.99
+# historical_spending[13,"inflation"] <- 138.24
+# 
+# write.csv(historical_spending,file = "historical_spending_modified.csv")
+```
+
+```{r linegraph}
+library(tidyverse)
+library(geomtextpath)
+
+historical_spending <- read.csv("historical_spending_modified.csv")
+
+historical_spending <- historical_spending %>% 
+  mutate(PerPerson = as.numeric(PerPerson))
+
+plot <- ggplot(data=historical_spending,aes(x=Year,y=PerPerson)) + 
+  scale_x_continuous(breaks = seq(2010,2022,by=1)) + 
+  scale_y_continuous(breaks = seq(100,200,by=10)) +
+  geom_line(color="darkred",linetype="dashed") +
+  geom_point(shape = 21, colour = "black", fill = "white", size = 3) +
+  geom_line(aes(x=Year,y=inflation),color="purple4",linetype="dashed") +
+  geom_point(aes(x=Year,y=inflation), shape = 21, colour = "black", fill = "white", size = 3) +
+  labs(x = "Year",
+       y = "Average Spending",
+       title = "Average Valentines Day Spending Exceeding Inflation",
+       caption = "Inflation Adjusted (to 2010) in Purple") +
+  theme_classic() +
+  theme(plot.title = element_text(color="darkred"),
+        axis.title.x = element_text(color="darkred"),
+        axis.title.y = element_text(color="darkred"),
+        axis.text.x = element_text(color="darkred"),
+        axis.text.y = element_text(color="darkred"),
+        axis.ticks = element_line(color="darkred"),
+        axis.line.x = element_line(color="darkred"),
+        axis.line.y = element_line(color="darkred"),
+        plot.caption = element_text(hjust = 0,color="darkred"),
+        panel.background = element_rect(fill="pink")) +
+  annotate(geom="text", x=2016, y=124, label="Inflation Adjusted Cost (2010)",color="purple4") +
+  annotate(geom="text", x=2016, y=152, label="Average Yearly Cost",color="darkred")
+```
+
+```{r plot}
+#| echo: false
+#| layout: [[-10,80,-10]]
+plot
+```
+
+

@@ -1,0 +1,88 @@
+---
+title: "CFA & Structural Equation Modeling Materials"
+author: "Brier Gallihugh, M.S."
+date: today
+format:
+  html:
+    theme: default
+    code-annotations: select
+    self-contained: true
+<<<<<<< HEAD
+  pdf: default
+=======
+  typst: default
+>>>>>>> 22b2afc (Commit)
+hyperrefoptions:
+  - linktoc=all
+toc: true
+toc-location: right
+toc-depth: 3
+warning: FALSE
+echo: true
+---
+
+```{r library}
+set.seed(5212023)
+library(tidyverse)
+library(lavaan)
+library(psych)
+library(semTools)
+library(semPlot)
+
+data <- psych::bfi[,16:25] # <1>
+
+cfa_data <- data[sample(nrow(data),300),] # <2>
+
+sem_data <- lavaan::PoliticalDemocracy %>% na.omit() # <3>
+```
+1. Create overall data for CFA
+2. Randomly sample 300 observations from `data` using `sample()` function
+3. Create data for SEM using the `PoliticalDemocracy` data set from the `lavaan` package. Omit missing data using the `na.omit()` function
+
+## Confirmatory Factor Analysis
+
+```{r cfa example}
+# Create CFA Model
+cfa_model <- 'nfactor  =~ N1 + N2 + N3 + N4 + N5
+              ofactor =~ O1 + O2 + O3 + O4 + O5'
+
+fit_cfa <- cfa(cfa_model, data = cfa_data) # <1>
+
+summary(fit_cfa, fit.measures = TRUE) # <2>
+
+semPaths(fit_cfa,'std') # <3>
+```
+1. Run a CFA on the model above using the `cfa()` function
+2. Generate CFA output and fit measures using the `summary()` function with the `fit.measures` argument set to `TRUE`
+3. Create a basic path diagram of the CFA model using the `semPaths()` function with standardized coefficients using the `std` argument
+
+:::{.callout-tip}
+For SEM and CFA models, the =~ syntax is used. You can interpret it as an "equals" sign more or less
+:::
+
+## Structural Equation Modeling
+
+```{r sem example}
+# Create SEM Model
+sem_model <- 'ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8'
+
+fit_sem <- sem(sem_model, data = sem_data) # <1>
+summary(fit_sem, standardized = TRUE, fit.measures = TRUE) # <2>
+semPaths(fit_sem,'std') # <3>
+```
+1. Run an SEM model using the `sem()` function
+2. Generate a summary of the SEM model with standardized results and fit measures using the `summary()` function with the `standardized` and `fit.measures()` arguments set to `TRUE`
+3. Generate a basic path diagram of the SEM model usign the `semPaths()` function with standardized coefficients using the `std` argument.
+
+:::{.callout-tip}
+As stated above, for SEM models we want the =~ syntax. For reference, a regression syntax is simply ~ while residuals syntax are ~~. Each of these can as with SEM, be interpreted as an "equals" sign.
+:::

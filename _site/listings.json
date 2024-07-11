@@ -1,0 +1,35 @@
+[
+  {
+<<<<<<< HEAD
+    "listing": "/tidytuesday.html",
+    "items": [
+      "/tidytuesday/1_25_23/index.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/intro to R/index.html",
+=======
+    "listing": "/blog.html",
+    "items": [
+>>>>>>> 22b2afc (Commit)
+      "/posts/welcome/index.html"
+    ]
+  },
+  {
+<<<<<<< HEAD
+    "listing": "/projects.html",
+    "items": [
+      "/projects/project 1/index.html"
+    ]
+=======
+    "listing": "/tidytuesday.html",
+    "items": []
+  },
+  {
+    "listing": "/portfolio.html",
+    "items": []
+>>>>>>> 22b2afc (Commit)
+  }
+]

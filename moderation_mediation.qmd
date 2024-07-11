@@ -1,0 +1,159 @@
+---
+title: "Mediation and Moderation Materials"
+author: "Brier Gallihugh, M.S."
+date: today
+format:
+  html:
+    theme: default
+    code-annotations: select
+    self-contained: true
+<<<<<<< HEAD
+  pdf: default
+=======
+  typst: default
+>>>>>>> 22b2afc (Commit)
+hyperrefoptions:
+  - linktoc=all
+toc: true
+toc-location: right
+toc-depth: 3
+warning: FALSE
+echo: true
+cache: true
+---
+
+```{r library}
+set.seed(10311993)
+library(mediation)
+library(psych)
+library(tidyverse)
+
+# Created Toy Data Set
+# Variance Covariance
+sigma <- rbind(c(1,-0.4,-0.3), c(-0.4,1, 0.7), c(-0.3,0.7,1))
+# Variable Mean
+mu <- c(7, 50, 7) 
+# Generate the Multivariate Normal Distribution
+df <- as.data.frame(mvrnorm(n=100, mu=mu, Sigma=sigma))
+df <- round(df,0)
+colnames(df) <- c("mediator1","outcome","predictor")
+df$condition <- rep(1:2,50)
+```
+
+## Running a Moderation Analysis in R
+
+```{r running moderation}
+moderation <- lm(outcome ~ condition*predictor, data = df) # <1>
+summary(moderation) # <2>
+```
+1. Create a mediation object using the `lm()` function. The condition*predictor syntax gets you both the main effects of condition and predictor as well as the interaction effect between the two
+2. Show a summary of the moderation using the `summary()` function.
+
+## Running a Mediation Analysis in R
+
+```{r running mediation}
+#Regress M on X
+outcomeM_fit <- lm(mediator1 ~ condition, data = df) # <1>
+summary(outcomeM_fit) # <2>
+
+#Regress Y on M and X
+outcomeY_fit <- lm(outcome ~ mediator1 + condition, data = df) # <3>
+summary(outcomeY_fit) # <4>
+
+#Run Mediation with Bootstrap
+outcome_fit <- mediation::mediate(outcomeM_fit, # <5>
+                                  outcomeY_fit, # <5>
+                                  treat = "condition", # <5>
+                                  mediator = "mediator1", # <5>
+                                  boot = TRUE, # <5>
+                                  sims = 5000) # <5>
+#Summary of Mediation
+summary(outcome_fit) # <6>
+
+#Path Coefficients
+plot(outcome_fit) # <7>
+```
+1. Run a regression of the M (mediator) on X using the `lm()` function
+2. Show output of the M on X regression using the `summary()` function
+3. Run a regression of Y on M and X using the `lm()` function
+4. Show output of the Y on M and X regression using the `summary()` function
+5. Run a mediation using the two regressions above. `treat` is the name of your X condition. `mediator` is the name of your mediating variable. Setting `boot` to `TRUE` will ensure that your mediation is bootstrapped. Lastly, the `sims` argument tells R how many samples you wish to bootstrap from. Typically you want ~ 5000 or more.
+6. For a summary of your mediation, use the `summary()` function. The indirect effect is labeled ACME
+7. The `plot()` function here will give you a graphical representation of the output above with respect to the range of the confidence interval for each metric. Please note by default this is the 95% confidence interval
+
+## Assumptions of Moderation Analyses
+
+```{r moderation assumptions}
+# Residual Normality
+shapiro.test(residuals(moderation)) # <1>
+
+# Multicollinearity
+car::vif(moderation, type = c("predictor")) # <2>
+
+# Independence of Errors
+car::durbinWatsonTest(moderation) # <3>
+```
+1. Test of the residual normality of the moderation using the `shapiro.test()` function
+2. Test of the multicollinearity of the moderation analyses using the `vif()` function in the `car` package. Because there is an interaction, you must specify an additional argument of `type = c("predictor")` to properly account for the interaction effect.
+3. To test the independence of errors assumption, you can do so using the `durbinWatsonTest()` function from the `car` package.
+
+## Assumptions of Mediation Analyses
+
+```{r mediation assumptions}
+# Linearity
+plot(lm(outcome ~ predictor, data = df),2) # <1>
+plot(lm(outcome ~ mediator1, data = df),2) # <1>
+plot(lm(mediator1 ~ predictor, data = df),2) # <1>
+# Multicollinearity
+cor(df) # <2>
+```
+1. One assumption is that the mediation variables are linearly related. As such the `plot()` function here will test the linearity of each possible combination of variables (i.e., outcome on predictor, outcome on mediator and mediator on predictor). ALL MUST BE LINEARLY RELATED
+2. To assess multicollinearity, the best course of action is a simple correlation matrix. You can achieve this using the `cor()` function for a correlation matrix
+
+## Using Moderation and Mediation Usings Hayes PROCESS Macro (for R)
+
+Click on the following [link](https://www.afhayes.com/public/processv43.zip) to download the R script for the PROCESS macro for R.
+
+```{r run hayes file}
+source("process.R")
+```
+
+## A Moderation Example Using Hayes PROCESS Macro
+
+```{r running moderation with hayes}
+process(data = df, # <1>
+        y = "outcome", # <2>
+        x = "predictor", # <3>
+        w = "mediator1", # <4>
+        model = 1, # <5>
+        stand = 1) # <6>
+```
+1. Assign your data to the `data` argument
+2. Assign your outcome variable to the `y` argument
+3. Assign your predictor variable to the `x` argument
+4. Assign your moderator to the `w` argument
+5. Set your `model` argument to `1` for simple moderation
+6. The `stand = 1` argument standardizes your output
+
+::: {.callout-tip}
+The Hayes PROCESS for R requires that all data is numeric in nature. As such, ensure that any potential factor variables are numeric prior to running the analyses. A failure to do so will result in PROCESS not running.
+:::
+
+## A Mediation Example Using Hayes PROCESS Macro
+
+```{r running mediation with hayes}
+process(data = df, # <1>
+        y = "outcome", # <2>
+        x = "predictor", # <3>
+        m = "mediator1", # <4>
+        model = 4, # <5>
+        stand = 1, # <6>
+        boot = 5000) # <7>
+```
+1. Assign your data to the `data` argument
+2. Assign your outcome variable to the `y` argument
+3. Assign your predictor variable to the `x` argument
+4. Assign your mediator to the `m` argument
+5. Set your `model` argument to `4` for simple mediation
+6. The `stand = 1` argument standardizes your output
+7. The `boot` argument specifies the number of samples you wish to bootstrap

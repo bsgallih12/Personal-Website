@@ -1,0 +1,56 @@
+---
+title: "Tidy Tuesday 3-05-24"
+author: "Brier S. Gallihugh"
+date: "2024-03-10"
+categories: [Trash,R,TidyTuesday]
+draft: true
+# image: valentines.png
+# image-alt: "A photo with a heart shape"
+description: "A #TidyTuesday data visualization of <insert here>"
+warning: false
+---
+
+```{r tidytuesday}
+#| output: false
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+
+data <- read.csv("data.csv")
+
+data_transf <- data %>% 
+  mutate(Month = case_when(
+    Month == "september" ~ "September",
+    Month == "july" ~ "July",
+    Month == "January" ~ "January",
+    Month == "February" ~ "February",
+    Month == "March" ~ "March",
+    Month == "April" ~ "April",
+    Month == "May" ~ "May",
+    Month == "June" ~ "June",
+    Month == "July" ~ "July",
+    Month == "August" ~ "August",
+    Month == "September" ~ "September",
+    Month == "October" ~ "October",
+    Month == "November" ~ "November",
+    Month == "December" ~ "December")) %>% 
+  na.omit() %>% 
+  group_by(Month) %>% 
+  summarize(Weight = mean(Weight,na.rm = TRUE),
+            N_Plastic = mean((sum(PlasticBottles) + sum(PlasticBags)),na.rm=TRUE)/10000,
+            N_Cig = mean(CigaretteButts)/10000) %>% 
+  pivot_longer(cols = c(N_Plastic,N_Cig),names_to = "Waste_Type",values_to = "N_Waste")
+```
+
+```{r graphic}
+
+```
+
+```{r plot}
+#| echo: false
+#| layout: [[-10,80,-10]]
+# plot
+```
+
+

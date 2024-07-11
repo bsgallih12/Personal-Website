@@ -1,0 +1,113 @@
+project:
+  type: website
+
+website:
+  title: "The Data Enthusiast"
+  favicon: favicon.png
+  page-footer:
+    center: ""
+    left:
+      "Made with [Posit Quarto](https://quarto.org/)"
+    right: ""
+    background: "#1B4132"
+  navbar:
+    right:
+      - text: "Blog"
+        file: blog.qmd
+      - text: "Resume"
+        file: Gallihugh_Resume.pdf
+      - text: "CV"
+        file: Gallihugh_CV.pdf
+<<<<<<< HEAD
+      - text: "Data Viz Projects"
+        file: tidytuesday.qmd
+=======
+      - text: "Portfolio"
+        file: portfolio.qmd
+>>>>>>> 22b2afc (Commit)
+      - text: "Consultation"
+        file: consultation.qmd
+      - text: "Presentations"
+        menu:
+        - text: "MPA 2021"
+          href: MPA2021_Poster.pdf
+        - text: "MPA 2023"
+          href: Gallihugh_MPA_2023.pdf
+        - text: "OU Department Brown Bag Talk"
+          href: Brown_Bag_BLM_March_25.pdf
+        - text: "SPSP 2021"
+          href: SPSP2021_Poster.pdf
+        - text: "SPSP 2022"
+          href: SPSS_Poster.pdf
+        - text: "SPSP 2023"
+          href: MarleyConfPresentation.html
+        - text: "MPA 2024"
+          href: MPA2024.html
+      - text: "R Workshop"
+        menu: 
+          - text: "R Basics Video"
+            href: https://drive.google.com/file/d/1hQyyQzsf5CjukioO9yyBNdoxxqZUCeYk/view
+          - data_clean.qmd
+          - text: "Data Manipulation Video"
+            href: https://drive.google.com/file/d/1BcDYFAqAFSMDj1s3Lr_R9Vs1XVZOUBq7/view
+          - text: "Data Visualization Video"
+            href: https://drive.google.com/file/d/1sn-BKqy1r5HyLuiy_mElJ88_cXrCyFF8/view
+<<<<<<< HEAD
+          - text: "Correlations Video"
+=======
+          - text: "Correlation Video"
+>>>>>>> 22b2afc (Commit)
+            href: https://drive.google.com/file/d/1MSCdiG0SH64lL0PyClKqrL-xgnxN0fuK/view
+          - correlation.qmd
+          - text: "T-Test Video"
+            href: https://drive.google.com/file/d/1tsQogteEQUyBB0ZM9hQTcaUHtPMv8aq7/view
+          - ttest.qmd
+          - text: "Regression Video"
+            href: https://drive.google.com/file/d/1rfHlAMCd4A4iKp_YF7zoMXPWQxpk-7yb/view
+          - text: "Logistic Regression Video"
+            href: https://drive.google.com/file/d/1rfHlAMCd4A4iKp_YF7zoMXPWQxpk-7yb/view
+          - regression.qmd
+          - text: "ANOVA Video"
+            href: https://drive.google.com/file/d/15UrC_I0RGyXDbD5GQs95d3G8Baa-QkTm/view
+          - text: "Factorial ANOVA Video"
+            href: https://drive.google.com/file/d/1PyIwomVXoN0kFBVgssJE_j7mRGwzixAn/view
+          - ANOVA.qmd
+          - text: "Non-Parametric Ind Sample T-Test Video"
+            href: https://drive.google.com/file/d/1hVjzEMcsq6EH9Kb2tV-pKsRdA7ZFAK5b/view
+          - text: "Non-Parametric Dep Sample T-Test Video"
+            href: https://drive.google.com/file/d/1hpMw7rfr4hUp9UOWoXMGWy-84ZNu8We4/view
+          - text: "Non-Parametric ANOVA Video"
+            href: https://drive.google.com/file/d/15bcwCsOTSRuel3ga4S-xdHPcq5gO6ERC/view
+          - text: "Non-Parametric Repeated Measures ANOVA Video"
+            href: https://drive.google.com/file/d/15bcwCsOTSRuel3ga4S-xdHPcq5gO6ERC/view
+          - nonparametric.qmd
+          - text: "Mediation Video"
+            href: https://drive.google.com/file/d/198SW2REq7CQAHhUYJl6cK0aqZyWpwLwV/view
+          - text: "Moderation Video"
+            href: https://drive.google.com/file/d/1VgVlRn5GNZxSVHE9GXaT470pjHh9pj6Q/view
+          - moderation_mediation.qmd
+          - text: "Factor Analysis Video"
+            href: https://drive.google.com/file/d/19RKlYxJ6Hc-v34OO-OcDiRZqUz61bAJy/view
+          - factor_analysis.qmd
+          - text: "Confirmatory Factor Analysis Video"
+            href: https://drive.google.com/file/d/1Ljm_We3Q03YTZ4odwEXgSFj0mcDRoc-3/view
+          - text: "Structural Equation Modeling Video"
+            href: https://drive.google.com/file/d/1EZriRMHGJbFxID39eCjm81IboMGT8mwW/view
+          - SEM.qmd                
+      - icon: github
+        href: https://github.com/bsgallih12
+      - icon: twitter
+        href: https://twitter.com/Brier_Gallihugh
+      - icon: linkedin
+        href: https://linkedin.com/in/brier-gallihugh
+      - icon: envelope
+        text: "Email"
+        href: mailto:bg464219@ohio.edu
+format:
+  html:
+    theme: custom_dark.scss
+    code-link: true
+    code-fold: false
+    
+
+

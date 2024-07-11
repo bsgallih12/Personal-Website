@@ -1,0 +1,102 @@
+---
+title: "Gallihugh Consulting"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+I provide three main types of consulting services:
+
+1.  Statistical, Survey & Experimental Design Consulting
+
+2.  Data Visualization
+
+3.  Automated reporting
+
+If you are interested in learning more about how I can assist with your
+projects or if you have questions or require advice, please do not
+hesitate to reach out. I offer a free 15-minute consultation to discuss
+your specific needs and determine how I can best support you. To
+schedule this consultation, feel free to contact me at <a href="mailto:gallihughconsulting@gmail.com">gallihughconsulting@gmail.com</a>. I will be happy to support you in a way that meets your needs.
+
+### Statistical, Experimental & Survey Design Consulting
+
+I offer a wide array of services designed to cater to a broad spectrum
+of statistical needs, whether you are a small mom and pop shop or a
+large organization (and anywhere in-between). Here is a detailed list of
+the services I provide:
+
+-   Data-Analysis
+
+-   Experimental Design
+
+-   Survey Design
+
+-   Data Cleaning and Management
+
+-   Statistical Modeling
+
+-   Psychometrics
+
+-   R Programming
+
+I have structured my pricing to accommodate different client categories to ensure up front pricing. My current hourly rates are as
+follows:
+
+| Client Category                       | Price (Per Hour) |
+|:--------------------------------------|:----------------:|
+| Large Organization (\> 100 employees) |     \$60/hr     |
+| Medium Business (\< 100 employees)    |     \$50/hr      |
+| Small Business (\< 10 employees)      |     \$35/hr^a^      |
+| Non Profit Organization               |     \$35/hr^a^      |
+| Students                              |   \$25/hr^a^    |
+
+::: callout-important
+## Note
+All statistical consultation will be rounded up to the next hour. As
+such the base minimum for any consultation will be billed at the hourly rate listed.
+
+^a^I am willing to adjust this price on a case by case basis.
+:::
+
+### Data Visualization
+
+Along with statistical consulting, it might be necessary for the end result of that consultation to involve visualization of data or results. I can help with this several ways. I offer the creation of interact dashboards (i.e., dashboards that you can provide input to) as well as static dashboards and simple figures (e.g., traditional graphs). 
+
+In order for me to best help you, the following information must also be provided prior to the visualization being created:
+
+1. What kind of visualizatoin do you need?
+
+2. When do you realistically need to have the visualization ready by?
+
+3. Do you have all the information (i.e., data) needed to produce the visualization?
+
+4. Could you provide a mock up of the visualization you wish to have created?
+
+| Visualization Type                     | Price (Per Project) |
+|:---------------------------------------|:-------------------:|
+| Interactive Dashboards                 |      \$125^b^     |
+| Static Dashboards                      |      \$75^b^      |
+| Static Figures (e.g., line/bar graphs) |      \$20^b^       |
+
+::: callout-important
+## Note
+^b^These are the base prices for each individual visualization type.
+Price will be adjusted to account for visualization complexity.
+:::
+
+### Static and Automated Reporting
+
+Lastly, I also offer the ability to provide organizations with two types of reports. The first is a static single use report. The report will be provided as a PDF but other formats can also be requested if needed (e.g., Word or HTML) for an additional formatting fee. The second offering, and maybe most beneficial is an automated reporting pipeline. This might be most beneficial for generating reports that consist of the same information but are needed to be consistently run on a regular interval (e.g., monthly or quarterly). This pipeline will consist of a web app which takes in the required information and exports a report with the requirements needed by the organization. I will provide you with the web app for your own use indefinitely.
+
+| Report Type     | Price (Per Project) |
+|:----------------|:-------------------:|
+| Web App (Shiny)^d^         |      \$300^c^      |
+| Industry Report |      \$150^c^      |
+
+::: callout-important
+## Note
+^c^These are the base prices for each individual reporting type. Price will be adjusted to account for visualization complexity.
+
+^d^Please note these reports can break if data entry methods (i.e., the source data) change. Repairing this break would require a new fee to fix and is not included in the original project price.
+:::

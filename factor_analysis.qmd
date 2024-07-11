@@ -1,0 +1,144 @@
+---
+title: "Factor Analysis Materials"
+author: "Brier Gallihugh, M.S."
+date: today
+format:
+  html:
+    theme: default
+    code-annotations: select
+    self-contained: true
+<<<<<<< HEAD
+  pdf: default
+=======
+  typst: default
+>>>>>>> 22b2afc (Commit)
+hyperrefoptions:
+  - linktoc=all
+toc: true
+toc-location: right
+toc-depth: 3
+warning: FALSE
+echo: true
+---
+
+## Creating Data
+
+```{r library}
+library(tidyverse)
+library(pastecs)
+library(GPArotation)
+library(psych)
+set.seed(10311993)
+
+data <- psych::bfi # <1>
+
+proposed_scale <- psych::bfi[,1:15] # <1>
+
+proposed_scale <- proposed_scale %>% na.omit() # <1>
+
+proposed_scale <- proposed_scale[sample(nrow(proposed_scale), size=500),] # <1>
+
+cor_proposed_scale <- cor(proposed_scale, use = "pairwise.complete.obs") # <2>
+
+apaTables::apa.cor.table(cor_proposed_scale,filename = "CorTable.doc") # <3>
+
+# For Readability
+round(cor(proposed_scale, use = "pairwise.complete.obs"),2) # <4>
+```
+1. Create a data set using the `bfi` dataset in the `psych` package
+2. Create a correlation matrix of the `bfi` items using the `cor()` function
+3. Create an APA Style correlation output within Word
+4. Round correlation matrix to 2 decimal places for readability in R
+
+## EFA Assumptions
+
+```{r EFA assumptions}
+#Barlett Test for New Scale
+cortest.bartlett(cor_proposed_scale, n = 500) # <1>
+
+#KMO for New Scale
+KMO(cor_proposed_scale) # <2>
+
+#Determinent for New Scale
+det(cor_proposed_scale) # <3>
+```
+1. Run a Bartlett test on the correlation matrix. Ideally, this should have a p value of less than .05
+2. Run a KMO on the proposed correlation matrix. Ideally this is greater than KMO = .90
+3. Find the determinant of the correlation matrix. This should be less than .00001
+
+## EFA Factor Structure
+
+```{r efa factor structure}
+psych::scree(cor_proposed_scale) # <1>
+fa.parallel(cor_proposed_scale, n.obs = 500) # <2>
+# Suggests 4 Factor Solution
+
+# Orthogonal (Non Correlated)
+orthoFA3 <- fa(r = cor_proposed_scale, nfactors = 4,rotate = 'varimax', use = "pairwise.complete.obs") # <3>
+#Show All Info
+print.psych(orthoFA3, sort = TRUE) # <4>
+
+# Oblique (Correlated)
+obliqueFA3 <- fa(r = cor_proposed_scale, nfactors = 4,rotate = 'oblimin', use = "pairwise.complete.obs") # <5>
+print.psych(obliqueFA3, sort = TRUE) # <6>
+```
+1. Create a scree plot using the `scree()` function in the `psych` package to determine potential number of factors
+2. Run a parallel analysis for additional information on number of factors using the `fa.parallel()` function in the `psych()` package.
+3. Run an orthogonal rotation factor analysis using the `fa()` function
+4. Print the output fit measures using the `print.psych()` function. The `SORT = TRUE` argument sorts the factor loading by loading magnitude.
+5. Run an oblique rotation factor analysis using the `fa()` function
+6. Print the output again using the `print.psych()` function
+
+:::{.callout-tip}
+More often than not, an oblique rotation will be the best fit for your data as it assumes that your items are correlated with one another
+:::
+
+## EFA Factor Structure Assumptions
+
+```{r factor solution assumptions}
+#Standard Residuals 
+obliqueFA3Residuals <- scale(obliqueFA3$residual) # <1>
+#Test Normality
+shapiro.test(obliqueFA3Residuals) # <2>
+#Histogram
+hist(obliqueFA3Residuals, col = 'lightgrey', # <3>
+     main="", xlab = "EFA Model Residuals, FA = 3 (Oblique)", # <3>
+     probability = TRUE) # <3>
+curve(dnorm(x, mean = mean(obliqueFA3Residuals), # <3>
+            sd = sd(obliqueFA3Residuals)), # <3>
+            add = TRUE, lwd = 2, col = 'blue') # <3>
+```
+1. Assess the residuals of your desired factor loading solution using the `scale()` function in combination with extracting the residuals using `object$residuals` notation.
+2. Statistical test of the factor solution residuals using the `shapiro.test()` function.
+3. Graphical depiction of the solution residuals with a normal curve overlay in the color blue
+
+## Calculating Reliability
+
+```{r reliability estimates}
+#Items
+Factor1<- c("A1","A2","A3","A4","A5") # <1>
+Factor2<- c("C1","C2","C3","C4","C5") # <2>
+Factor3<- c("E1","E2","E3","E4","E5") # <3>
+Overall <- c("A1","A2","A3","A4","A5","C1","C2","C3","C4","C5","E1","E2","E3","E4","E5") # <4>
+
+#Reliability Factor 1
+psych::alpha(proposed_scale[,Factor1], check.keys = TRUE) # <5>
+#Reliability Factor 2
+psych::alpha(proposed_scale[, Factor2], check.keys = TRUE) # <6>
+#Reliablity Factor 3
+psych::alpha(proposed_scale[, Factor3], check.keys = TRUE) # <7>
+#Overall Reliability
+psych::alpha(proposed_scale[, Overall], check.keys = TRUE) # <8>
+```
+1. Create a subset of items to represent Factor 1
+2. Create a subset of items to represent Factor 2
+3. Create a subset of items to represent Factor 3
+4. Create a subset of items to represent Overall 
+5. Determine the reliability of Factor 1 using the `alpha()` function in the `psych` package. `check.keys` ensures that items that load negatively are reverse coded.
+6. Determine the reliability of Factor 2 using the `alpha()` function in the `psych` package. `check.keys` ensures that items that load negatively are reverse coded.
+7. Determine the reliability of Factor 3 using the `alpha()` function in the `psych` package. `check.keys` ensures that items that load negatively are reverse coded.
+8. Determine the reliability of Overall using the `alpha()` function in the `psych` package. `check.keys` ensures that items that load negatively are reverse coded.
+
+:::{.callout-tip}
+If you have more than one factor, your scale is no longer one (or uni) dimensional. As such, the idea of an "overall" reliability is questionable at best. Further, all reliability estimates are sample dependent. For non-sample dependent metrics, one should consider Item Response Theory (IRT)
+:::

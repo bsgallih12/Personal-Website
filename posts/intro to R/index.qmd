@@ -1,0 +1,12 @@
+---
+title: "An Intro To R and RStudio"
+author: "Brier S. Gallihugh"
+date: "2023-01-22"
+categories: [R]
+draft: true
+---
+![](intro.png)
+
+
+
+

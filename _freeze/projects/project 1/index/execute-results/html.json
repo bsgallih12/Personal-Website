@@ -1,0 +1,15 @@
+{
+  "hash": "5f495e2e1c8d883ed32abc28db77a547",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"United States Tobacco Consumption (2000-Present)\"\nauthor: \"Brier S. Gallihugh\"\ndate: \"2024-05-01\"\ncategories: [Portfolio,R]\ndraft: false\nimage: smoking.png\nimage-alt: \"No smoking sign to represent topic of this project\"\ndescription: \"A data analysis project looking at smoking in the US between 2000 and now\"\nwarning: false\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidymodels)\nlibrary(tidyverse)\nlibrary(mice)\nlibrary(skimr)\n\nset.seed(10311993)\n\n# Import data into R\ndata <- read.csv(\"smoking_health.csv\")\n\n# Check Missing Data\nskimr::skim(data)\n\n# Imput Missing Data\ndata_imput <- mice::mice(data)\n\n# Output data wo missing\ndata <- mice::complete(data_imput)\n```\n:::\n\n\n## Situational Context\n\nInsert fictional scenario here using the data set provided\n\n## Organizational Question\n\n1. What impact does smoking have on cholesterol?\n2. What impact does smoking have on blood pressure (normal vs high)\n\n\n::: {.cell}\n\n:::\n\n\n## Statistical Trends\n\n\n::: {.cell}\n\n:::\n\n\n\n## Visualzations\n\n\n::: {.cell}\n\n:::\n\n\n## Recommendations\n\nData Courtesy of the [CDC](https://data.cdc.gov/Policy/Adult-Tobacco-Consumption-In-The-U-S-2000-Present/rnvb-cpxx/about_data)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

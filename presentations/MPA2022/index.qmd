@@ -1,0 +1,7 @@
+---
+title: "MPA 2022"
+date-format: "MMMM YYYY"
+format: html
+# resources: 
+image: titlepage.png
+---

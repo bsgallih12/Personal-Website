@@ -1,0 +1,6 @@
+---
+title: "SPSP 2022"
+date-format: "MMMM YYYY"
+format: html
+image: titlepage.png
+---

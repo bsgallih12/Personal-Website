@@ -1,0 +1,176 @@
+---
+title: "Non-Parametric Tests Materials"
+author: "Brier Gallihugh, M.S."
+date: today
+format:
+  html:
+    theme: default
+    code-annotations: select
+    self-contained: true
+<<<<<<< HEAD
+  pdf: default
+=======
+  typst: default
+>>>>>>> 22b2afc (Commit)
+hyperrefoptions:
+  - linktoc=all
+toc: true
+toc-location: right
+toc-depth: 3
+warning: FALSE
+echo: true
+---
+
+```{r library}
+set.seed(10311993)
+library(tidyverse)
+library(psych)
+library(palmerpenguins)
+
+data <- palmerpenguins::penguins %>% dplyr::select(island,body_mass_g) %>% # <1>
+  dplyr::filter(island == "Biscoe" | island == "Dream") %>% na.omit() # <2>
+
+data <- droplevels(data) # <3>
+```
+1. Take the `palmerpenguins` data set and use the `select` function to isolate the island and body_mass_g variables
+2. Use the `filter()` function to select for only observations where the island variable is "Biscoe" or "Dream" and omit any missing data after using the `na.omit()` function.
+3. Use the `droplevels()` function to ensure factor levels no longer present are excluded from analysis.
+
+## Independent Sample T Test (i.e., Wilcoxon’s Rank-Sum Test)^1^
+
+:::{.callout-tip}
+1. This is computationally the same as the Mann-Whitley test (Field et al, 2012)
+:::
+
+:::{.callout-caution}
+Non-parametric tests are NOT less powerful than their parametric counterpart as long as the distribution of interest is not normally distributed (Field et al, 2012)
+:::
+
+```{r ind t test non-para}
+# Two-Tailed (one-tailed "greater" diff is + OR "lesser" diff is -)
+# Correction for p value (TRUE by default, but can change to FALSE correction = FALSE)
+ind_t_nonpar <- wilcox.test(body_mass_g ~ island, data = data) # <1>
+ind_t_nonpar # <2>
+
+# Effect Size (from Field et al, 2012)
+
+rFromWilcox<-function(wilcoxModel, N) # <3>
+{ # <3>
+z<- qnorm(wilcoxModel$p.value/2) # <3>
+r<- z/ sqrt(N) # <3>
+return(r) # <3>
+} # <3>
+
+rFromWilcox(ind_t_nonpar,291) # <4>
+
+# Typical reporting for non-parametric involves median values
+descriptive_stats <- data %>% # <5>
+  group_by(island) %>%  # <5>
+  summarize(group_size = n(), # <6>
+            median = median(body_mass_g),# <6>
+            mean = round(mean(body_mass_g, na.rm = TRUE),2), # <6>
+            sd = round(sd(body_mass_g, na.rm = TRUE),2)) # <6>
+
+print(descriptive_stats) # <7>
+```
+1. Initiate a non parametric independent samples t test using the `wilcox.test()` function.
+2. Show the output of the independent sample non-parametric t test
+3. Create a pseudo effect size measure for non parametric tests courtesy of Field et al (2012).
+4. Generate an effect size measure *r* using the function defined above. The function requires you provide the wilcox.test object and the sample size
+5. Generate some simple descriptive statistics for reporting purposes grouped by island affiliation
+6. Several statistics included such as sample size, mean, median, and standard deviation.
+7. Show the output of the above calculations using the `print()` function.
+
+## Dependent Sample T Test (i.e., Wilcoxon Signed-Rank Test)
+
+```{r dep t test non-para}
+data <- psych::sat.act %>% # <1>
+  mutate(condition = rep(c(1,2),350), # <1>
+         ACT_2 = if_else(age < 39, ACT + 3, ACT -1)) # <1>
+
+data_condition1 <- data %>%  # <2>
+  filter(condition == 1) # <2>
+
+data_condition2 <- data %>% # <3>
+  filter(condition == 2) # <3>
+
+condition1_test <- wilcox.test(data_condition1$ACT, # <4>
+                           data_condition1$ACT_2, # <4>
+                           paired = TRUE, # <4>
+                           correct = FALSE) # <4>
+
+condition2_test <- wilcox.test(data_condition2$ACT, # <5>
+                           data_condition2$ACT_2, # <5>
+                           paired = TRUE, # <5>
+                           correct = FALSE) # <5>
+
+print(condition1_test) # <6>
+print(condition2_test) # <6>
+
+# Effect Size
+rFromWilcox(condition1_test,350) # <7>
+rFromWilcox(condition2_test,350) # <7>
+```
+1. Create a dependent samples t test data set
+2. Filter data by condition variable (`condition = 1`) using the `filter()` function
+3. Filter data by condition variable (`condition = 2`) using the `filter()` function
+4. Run a `wilcox.test()` function for `condition = 1`. You want to include the time1 and time2 measures. The `paired = TRUE` tells R that this is a dependent sample t test
+5. Do the same for the `condition = 2` condition.
+6. The `print()` function will give you the results for the non parametric dependent sample t test
+7. Use the function shown earlier by Fields et al (2012) to calculate an effect size. It takes the same arguments as before.
+
+
+## One Way ANOVA (i.e., Kruskal–Wallis Test)
+
+```{r anova non-para}
+data2 <- psych::sat.act[1:600,] %>% # <1>
+  mutate(condition = as.factor(rep(c(1:3),200)), # <1>
+         rank = rank(ACT)) # <1>
+
+# Condition 3 is control
+
+kruskal.test(ACT ~ condition, data = data2) # <2>
+
+pgirmess::kruskalmc(ACT ~ condition, data = data2) # <3>
+
+# Maybe we want to see the ranked means
+
+by(data2$rank,data2$condition,mean) # <4>
+
+# Maybe we just want to compare each exp group to the control (Lowers Odds of Type II error).
+# We can do that. But we need it to be the first level factor
+
+data2$condition <- relevel(data2$condition,3) # <5>
+
+levels(data2$condition) # <6>
+
+pgirmess::kruskalmc(ACT ~ condition, data = data2, cont = "two-tailed") # <7>
+```
+1. Create a dummy data set
+2. Run a non parametric ANOVA using the `kruskal.test()` function
+3. Run a posthoc multiple comparisons test using the `kruskalmc()` function
+4. Show "means" using the `by()` function. It takes the rank and condition variables as well as the `mean()` function 
+5. Sort levels so that the main comparison condition is first using the `relevel()` function. It takes your condition variable as well as the factor you want first (in this case 3).
+6. The `levels() function confirms that our ordering is correct (i.e., 3,1,2)
+7. Use the `kuskalmc()` function with the `cont` argument set to "two-tailed" for planned comparison
+
+## Repeated Measures ANOVA (i.e., Friedman's ANOVA)
+
+```{r repeated measures anova non-para}
+data3 <- data2 %>% # <1>
+  mutate(ACT_2 = if_else(age < 39, ACT + 3, ACT -1)) %>% select(ACT,ACT_2) # <1>
+
+# Test
+friedman.test(as.matrix(data3)) # <2>
+
+# Post Hoc
+pgirmess::friedmanmc(as.matrix(data3)) # <3>
+```
+1. Create a repeated measures ANOVA dummy data set
+2. Run a repeated measures non parametric ANOVA using the `friedman.test()` function. Note that the `as.matrix()` function is required for the test to run properly.
+3. Run a posthoc test using the `friedmanmc()` function.
+
+:::{.callout-tip}
+For the Friedman test, the function requires that ONLY the variables needed for the analysis are included in the data frame
+:::
+

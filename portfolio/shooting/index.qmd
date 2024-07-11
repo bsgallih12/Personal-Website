@@ -1,0 +1,6 @@
+---
+title: "School Shooting Project"
+author: "Brier Gallihugh"
+date: "07/11/2024"
+draft: true
+---
