@@ -4,8 +4,6 @@ window.QuartoSupport = function () {
     return /print-pdf/gi.test(window.location.search);
   }
 
-<<<<<<< HEAD
-=======
   // helper for theme toggling
   function toggleBackgroundTheme(el, onDarkBackground, onLightBackground) {
     if (onDarkBackground) {
@@ -20,7 +18,6 @@ window.QuartoSupport = function () {
     }
   }
 
->>>>>>> 22b2afc (Commit)
   // implement controlsAudo
   function controlsAuto(deck) {
     const config = deck.getConfig();
@@ -128,10 +125,6 @@ window.QuartoSupport = function () {
     }
   }
 
-<<<<<<< HEAD
-  // add footer text
-  function addFooter(deck) {
-=======
   // tweak slide-number element
   function tweakSlideNumber(deck) {
     deck.on("slidechanged", function (ev) {
@@ -145,7 +138,6 @@ window.QuartoSupport = function () {
 
    // add footer text
    function addFooter(deck) {
->>>>>>> 22b2afc (Commit)
     const revealParent = deck.getRevealElement();
     const defaultFooterDiv = document.querySelector(".footer-default");
     if (defaultFooterDiv) {
@@ -160,25 +152,17 @@ window.QuartoSupport = function () {
             prevSlideFooter.remove();
           }
           const currentSlideFooter = ev.currentSlide.querySelector(".footer");
-<<<<<<< HEAD
-=======
           const onDarkBackground = Reveal.getSlideBackground(ev.indexh, ev.indexv).classList.contains('has-dark-background')
           const onLightBackground = Reveal.getSlideBackground(ev.indexh, ev.indexv).classList.contains('has-light-background')
->>>>>>> 22b2afc (Commit)
           if (currentSlideFooter) {
             defaultFooterDiv.style.display = "none";
             const slideFooter = currentSlideFooter.cloneNode(true);
             handleLinkClickEvents(deck, slideFooter);
             deck.getRevealElement().appendChild(slideFooter);
-<<<<<<< HEAD
-          } else {
-            defaultFooterDiv.style.display = "block";
-=======
             toggleBackgroundTheme(slideFooter, onDarkBackground, onLightBackground)
           } else {
             defaultFooterDiv.style.display = "block";
             toggleBackgroundTheme(defaultFooterDiv, onDarkBackground, onLightBackground)
->>>>>>> 22b2afc (Commit)
           }
         });
       }
@@ -317,8 +301,6 @@ window.QuartoSupport = function () {
     }
   }
 
-<<<<<<< HEAD
-=======
   function handleWhiteSpaceInColumns(deck) {
     for (const outerDiv of window.document.querySelectorAll("div.columns")) {
       // remove all whitespace text nodes
@@ -336,7 +318,6 @@ window.QuartoSupport = function () {
     }
   }
 
->>>>>>> 22b2afc (Commit)
   return {
     id: "quarto-support",
     init: function (deck) {
@@ -345,19 +326,13 @@ window.QuartoSupport = function () {
       fixupForPrint(deck);
       applyGlobalStyles(deck);
       addLogoImage(deck);
-<<<<<<< HEAD
-=======
       tweakSlideNumber(deck);
->>>>>>> 22b2afc (Commit)
       addFooter(deck);
       addChalkboardButtons(deck);
       handleTabbyClicks();
       handleSlideChanges(deck);
       workaroundMermaidDistance(deck);
-<<<<<<< HEAD
-=======
       handleWhiteSpaceInColumns(deck);
->>>>>>> 22b2afc (Commit)
     },
   };
 };
