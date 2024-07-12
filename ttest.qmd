@@ -3,15 +3,11 @@ title: "T-Test Materials"
 author: "Brier Gallihugh, M.S."
 date: today
 format: 
-  # html:
-  #   theme: default
-  #   code-annotations: select
-  #   self-contained: true
-<<<<<<< HEAD
-  pdf: default
-=======
+  html:
+    theme: default
+    code-annotations: select
+    self-contained: true
   typst: default
->>>>>>> 22b2afc (Commit)
 hyperrefoptions:
   - linktoc=all
 toc: true

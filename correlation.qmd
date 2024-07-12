@@ -48,22 +48,13 @@ For this part of the workshop, we are going to focus on the `mpg` and `wt` varia
 #### Graphical Depiction of Normality Assumption (mpg)
 ```{r correlation mpg}
 #| layout-nrow: 1
-<<<<<<< HEAD
-mpg_plot <- ggplot(data,aes(x = mpg)) + # <1>
-=======
 ggplot(data,aes(x = mpg)) + # <1>
->>>>>>> 22b2afc (Commit)
   geom_histogram(aes(y=after_stat(density))) + # <1>
   stat_function(fun = dnorm, # <1>
                 args = list(mean = mean(data$mpg), # <1>
                             sd = sd(data$mpg)), # <1>
                 col = "blue") + # <1>
   theme_classic() # <1>
-<<<<<<< HEAD
-
-print(mpg_plot)
-=======
->>>>>>> 22b2afc (Commit)
 ```
 1. This should look very familiar to the histogram part of the workshop
 
@@ -81,22 +72,13 @@ print(shapiro.test(data$mpg)) # <2>
 #### Graphical Depiction of Normality Assumption (wt)
 ```{r correlation wt}
 #| layout-nrow: 1
-<<<<<<< HEAD
-wt_plot <- ggplot(data,aes(x = wt)) +
-=======
 ggplot(data,aes(x = wt)) +
->>>>>>> 22b2afc (Commit)
-  geom_histogram(aes(y=after_stat(density))) + 
+geom_histogram(aes(y=after_stat(density))) + 
   stat_function(fun = dnorm,
                 args = list(mean = mean(data$wt),
                             sd = sd(data$wt)),
                 col = "blue") + 
   theme_classic()
-<<<<<<< HEAD
-
-print(wt_plot)
-=======
->>>>>>> 22b2afc (Commit)
 ```
 
 
@@ -118,11 +100,6 @@ corr_results <- corr.test(x = data$mpg, # <1>
           use = "pairwise", # <3>
           method = "pearson", # <4>
           adjust = "holm") # <5>
-<<<<<<< HEAD
-
-?corr.test()
-=======
->>>>>>> 22b2afc (Commit)
 ```
 1. Choose one of your variables to be your `x` variable
 2. Choose the other to be your `y` variable

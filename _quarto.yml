@@ -1,13 +1,11 @@
 project:
   type: website
-
 website:
   title: "The Data Enthusiast"
   favicon: favicon.png
   page-footer:
     center: ""
-    left:
-      "Made with [Posit Quarto](https://quarto.org/)"
+    left: "Made with [Posit Quarto](https://quarto.org/)"
     right: ""
     background: "#1B4132"
   navbar:
@@ -18,13 +16,8 @@ website:
         file: Gallihugh_Resume.pdf
       - text: "CV"
         file: Gallihugh_CV.pdf
-<<<<<<< HEAD
-      - text: "Data Viz Projects"
-        file: tidytuesday.qmd
-=======
       - text: "Portfolio"
         file: portfolio.qmd
->>>>>>> 22b2afc (Commit)
       - text: "Consultation"
         file: consultation.qmd
       - text: "Presentations"
@@ -52,11 +45,8 @@ website:
             href: https://drive.google.com/file/d/1BcDYFAqAFSMDj1s3Lr_R9Vs1XVZOUBq7/view
           - text: "Data Visualization Video"
             href: https://drive.google.com/file/d/1sn-BKqy1r5HyLuiy_mElJ88_cXrCyFF8/view
-<<<<<<< HEAD
           - text: "Correlations Video"
-=======
           - text: "Correlation Video"
->>>>>>> 22b2afc (Commit)
             href: https://drive.google.com/file/d/1MSCdiG0SH64lL0PyClKqrL-xgnxN0fuK/view
           - correlation.qmd
           - text: "T-Test Video"

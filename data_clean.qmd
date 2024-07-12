@@ -7,11 +7,7 @@ format:
     theme: default
     code-annotations: select
     self-contained: true
-<<<<<<< HEAD
-  pdf: default
-=======
   typst: default
->>>>>>> 22b2afc (Commit)
 hyperrefoptions:
   - linktoc=all
 toc: true
